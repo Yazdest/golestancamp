@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -418,8 +418,9 @@
   }
   footer .developer-credit {
     margin-top: 6px;
-    font-size: 0.8rem;
-    opacity: 0.85;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--green-dark);
   }
 </style>
 </head>
@@ -614,7 +615,7 @@
 </footer>
 
 <script>
-  // آدرس اسکریپت گوگل شیت شما (پس از انتشار اسکریپت، لینک وب‌اپلیکیشن خود را اینجا جایگزین کنید)
+  // آدرس اسکریپت گوگل شیت
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGAeIXmLD_Ib6BQ0sKfpQ2YTbOfAUWm8UPkVfcCB04XDOrz7i8bRCFUGTpEOMzyjgG/exec";
 
   const applicantType = document.getElementById('applicantType');
@@ -624,7 +625,7 @@
   const contactFields = document.getElementById('contactFields');
   const submitBtn = document.getElementById('submitBtn');
 
-  // تبدیل ارقام فارسی/عربی به انگلیسی (برای مقایسه‌ی درست با گوگل شیت)
+  // تبدیل ارقام فارسی/عربی به انگلیسی
   function toEnglishDigits(str) {
     return String(str)
       .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
@@ -640,130 +641,4 @@
     return toPersianDigits(num.toLocaleString('en-US'));
   }
 
-  function calculatePrice() {
-    if (!applicantType.value || !peopleCount.value) {
-      resultAmount.textContent = 'لطفاً موارد بالا را تکمیل کنید';
-      return;
-    }
-
-    let people = parseInt(peopleCount.value, 10);
-    if (isNaN(people) || people < 1) {
-      resultAmount.textContent = 'لطفاً تعداد نفرات را به درستی وارد کنید';
-      return;
-    }
-
-    const basePeople = 15;
-    const extraPersonFee = 100000;
-    let basePrice;
-    if (applicantType.value === 'special') basePrice = 1600000;
-    else if (applicantType.value === 'staff') basePrice = 2000000;
-    else basePrice = 2500000;
-
-    let total = basePrice;
-    if (people > basePeople) {
-      const extra = people - basePeople;
-      total += extra * extraPersonFee;
-    }
-
-    resultAmount.textContent = formatNumber(total) + ' تومان';
-  }
-
-  applicantType.addEventListener('change', calculatePrice);
-  peopleCount.addEventListener('input', calculatePrice);
-
-  // فعال‌سازی تقویم شمسی
-  $(document).ready(function() {
-    $(".persian-datepicker-input").pDatepicker({
-      format: 'YYYY/MM/DD',
-      altField: '#altDateInput',
-      altFormat: 'YYYY/MM/DD',
-      initialValue: false,
-      minDate: new persianDate().valueOf(),
-      autoClose: true,
-      onSelect: function(unix) {
-        let selectedDate = $("#persianDateInput").val();
-        checkDateAvailability(selectedDate);
-      }
-    });
-  });
-
-  // بررسی آزاد بودن تاریخ از گوگل شیت
-  function checkDateAvailability(dateStr) {
-    statusMessage.style.display = 'block';
-    statusMessage.className = 'status-message status-checking';
-    statusMessage.textContent = 'در حال بررسی ظرفیت تاریخ انتخاب شده...';
-    contactFields.style.display = 'none';
-
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
-      // شبیه‌سازی تست موقعی که هنوز اسکریپت متصل نشده است
-      setTimeout(() => {
-        showAvailableStatus(dateStr);
-      }, 800);
-      return;
-    }
-
-    fetch(`${GOOGLE_SCRIPT_URL}?action=checkDate&date=${encodeURIComponent(toEnglishDigits(dateStr))}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.available) {
-          showAvailableStatus(dateStr);
-        } else {
-          statusMessage.className = 'status-message status-reserved';
-          statusMessage.textContent = `متأسفانه تاریخ ${dateStr} قبلاً رزرو شده است. لطفاً تاریخ دیگری را انتخاب کنید.`;
-          contactFields.style.display = 'none';
-        }
-      })
-      .catch(err => {
-        statusMessage.className = 'status-message status-reserved';
-        statusMessage.textContent = 'خطا در اتصال به سرور رزرو. لطفاً چند لحظه بعد دوباره تلاش کنید.';
-        contactFields.style.display = 'none';
-      });
-  }
-
-  function showAvailableStatus(dateStr) {
-    statusMessage.className = 'status-message status-available';
-    statusMessage.textContent = `تاریخ ${dateStr} خالی است! مشخصات خود را برای ثبت اولیه وارد کنید.`;
-    contactFields.style.display = 'block';
-  }
-
-  // ارسال داده‌های رزرو به گوگل شیت
-  document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'در حال ثبت رزرو...';
-
-    const formData = {
-      action: 'addBooking',
-      date: toEnglishDigits($("#persianDateInput").val()),
-      applicantType: applicantType.options[applicantType.selectedIndex].text,
-      peopleCount: peopleCount.value,
-      price: resultAmount.textContent,
-      fullName: document.getElementById('fullName').value,
-      phone: document.getElementById('phone').value
-    };
-
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
-      alert('درخواست رزرو شما ثبت شد! (برای اتصال دائمی به گوگل‌شیت، مراحل راهنمای گوگل‌شیت را دنبال کنید)');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'ثبت رسمی درخواست رزرو';
-      return;
-    }
-
-    fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    }).then(() => {
-      alert('درخواست رزرو شما با موفقیت ثبت گردید. پس از بررسی جهت تأیید با شما تماس گرفته خواهد شد.');
-      location.reload();
-    }).catch(err => {
-      alert('خطا در ثبت رزرو. لطفاً مجدداً تلاش کنید.');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'ثبت رسمی درخواست رزرو';
-    });
-  });
-</script>
-
-</body>
-</html>
+  function calculatePrice
