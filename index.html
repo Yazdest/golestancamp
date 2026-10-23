@@ -50,8 +50,8 @@
     font-family:"B Nazanin","Tahoma","Segoe UI",sans-serif;
     background:var(--bg);
     color:var(--text);
-    line-height:1.95;
-    font-size:16px;
+    line-height:2.0;
+    font-size:19px;
     -webkit-font-smoothing:antialiased;
   }
   header.hero{
@@ -92,7 +92,7 @@
   }
   header.hero h1{
     font-family:"IranNastaliq","B Titr","Tahoma",sans-serif;
-    font-size:5rem;
+    font-size:5.5rem;
     font-weight:normal;
     letter-spacing:0;
     margin-bottom:12px;
@@ -100,9 +100,9 @@
     line-height: 1.3;
   }
   header.hero p.subtitle{
-    font-size:1.15rem;
+    font-size:1.35rem;
     opacity:0.98;
-    max-width:580px;
+    max-width:620px;
     margin:0 auto;
     font-weight:300;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
@@ -116,11 +116,11 @@
     border:1px solid rgba(255,255,255,0.5);
     padding:8px 22px;
     border-radius:30px;
-    font-size:0.9rem;
+    font-size:1.05rem;
     backdrop-filter:blur(4px);
   }
   main{
-    max-width:880px;
+    max-width:920px;
     margin:-60px auto 0;
     padding:0 20px 70px;
     position:relative;
@@ -130,8 +130,8 @@
     background:var(--card);
     border-radius:var(--radius);
     box-shadow:var(--shadow-md);
-    padding:34px 32px;
-    margin-bottom:28px;
+    padding:38px 36px;
+    margin-bottom:30px;
     border:1px solid rgba(27,77,53,0.05);
   }
   section.card h2{
@@ -140,34 +140,35 @@
     align-items:center;
     gap:10px;
     color:var(--green-dark);
-    font-size:1.4rem;
+    font-size:1.65rem;
     letter-spacing:0.2px;
     margin-bottom:20px;
     border-right:4px solid var(--gold);
     padding-right:14px;
   }
   section.card h2 svg{
-    width:22px;
-    height:22px;
+    width:26px;
+    height:26px;
     flex-shrink:0;
   }
   section.card > p{
     color:var(--text);
+    font-size:1.1rem;
   }
   .facilities{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
     gap:16px;
     margin-top:12px;
   }
   .facility-item{
     background:var(--green-light);
     border-radius:14px;
-    padding:22px 12px;
+    padding:22px 14px;
     text-align:center;
-    font-size:0.95rem;
+    font-size:1.05rem;
     color:var(--green-dark);
-    font-weight:600;
+    font-weight:700;
     transition:transform .2s ease, box-shadow .2s ease;
   }
   .facility-item:hover{
@@ -175,8 +176,8 @@
     box-shadow:var(--shadow-sm);
   }
   .facility-item svg{
-    width:30px;
-    height:30px;
+    width:34px;
+    height:34px;
     display:block;
     margin:0 auto 10px;
     color:var(--green);
@@ -195,14 +196,14 @@
   }
   .capacity-strip .num{
     font-family:"B Titr","Tahoma",sans-serif;
-    font-size:2rem;
+    font-size:2.3rem;
     font-weight:800;
     color:var(--green);
     display:block;
   }
   .capacity-strip .lbl{
     color:var(--muted);
-    font-size:0.88rem;
+    font-size:1rem;
   }
   .gallery{
     display:grid;
@@ -221,21 +222,63 @@
     justify-content:center;
     gap:8px;
     color:var(--muted);
-    font-size:0.85rem;
+    font-size:0.95rem;
     text-align:center;
     padding:6px;
     overflow: hidden;
+    cursor: pointer;
     transition: transform .2s ease;
   }
   .gallery-item:hover {
-    transform: scale(1.02);
+    transform: scale(1.03);
   }
   .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    transition: transform 0.3s ease;
   }
+  .gallery-item img:hover {
+    transform: scale(1.08);
+  }
+
+  /* استایل پنجره بزرگ‌نمایی تصویر (Lightbox) */
+  #lightboxModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  #lightboxModal img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  }
+  #lightboxClose {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.4);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  #lightboxClose:hover { background: rgba(255,255,255,0.2); }
+
   .location-box {
     display: flex;
     align-items: center;
@@ -251,7 +294,7 @@
   .location-text {
     font-weight: 700;
     color: var(--green-dark);
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .map-btn {
     display: inline-flex;
@@ -259,11 +302,11 @@
     gap: 8px;
     background: var(--green-dark);
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 22px;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     transition: background .2s ease;
   }
   .map-btn:hover {
@@ -287,13 +330,13 @@
   .calc-row label{
     font-weight:700;
     color:var(--green-dark);
-    font-size:0.92rem;
+    font-size:1.1rem;
   }
   .calc-row select, .calc-row input{
-    padding:12px 14px;
+    padding:14px 16px;
     border-radius:10px;
     border:1px solid #cfe3d6;
-    font-size:1rem;
+    font-size:1.1rem;
     font-family:inherit;
     background:#fff;
     transition:border-color .15s ease, box-shadow .15s ease;
@@ -311,23 +354,24 @@
     border-radius:14px;
     border:1.5px solid var(--gold);
     box-shadow:var(--shadow-sm);
+    font-size: 1.15rem;
   }
   .calc-result .amount{
     font-family:"B Titr","Tahoma",sans-serif;
-    font-size:2rem;
+    font-size:2.3rem;
     font-weight:800;
     color:var(--green-dark);
     display:block;
     margin-top:6px;
   }
 
-  /* استایل وضعیت تقویم و دکمه‌ها */
   .status-message {
-    padding: 12px;
+    padding: 14px;
     border-radius: 10px;
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
+    font-size: 1.05rem;
     display: none;
   }
   .status-available { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
@@ -338,10 +382,10 @@
     width: 100%;
     background: var(--green-dark);
     color: white;
-    padding: 14px;
+    padding: 16px;
     border: none;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-family: inherit;
     font-weight: bold;
     cursor: pointer;
@@ -356,12 +400,12 @@
   .faq-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-top: 10px;
   }
   .faq-item {
     background: var(--green-light);
-    padding: 16px 20px;
+    padding: 18px 22px;
     border-radius: 12px;
     border: 1px solid #e2eee6;
   }
@@ -369,24 +413,23 @@
     font-weight: 700;
     color: var(--green-dark);
     margin-bottom: 6px;
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
   .faq-a {
     color: var(--text);
-    font-size: 0.92rem;
-    line-height: 1.8;
+    font-size: 1.05rem;
+    line-height: 1.9;
   }
 
-  /* استایل نظرات میهمانان */
   .reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px;
     margin-top: 12px;
   }
   .review-card {
     background: var(--green-light);
-    padding: 18px;
+    padding: 20px;
     border-radius: 14px;
     border: 1px solid #e2eee6;
     display: flex;
@@ -394,16 +437,16 @@
     justify-content: space-between;
   }
   .review-text {
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     color: var(--text);
-    line-height: 1.8;
+    line-height: 1.9;
     margin-bottom: 12px;
     font-style: italic;
   }
   .review-author {
     font-weight: 700;
     color: var(--green-dark);
-    font-size: 0.88rem;
+    font-size: 0.98rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -412,36 +455,43 @@
   }
   .review-stars {
     color: var(--gold);
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .note{
-    font-size:0.85rem;
+    font-size:0.95rem;
     color:var(--muted);
     margin-top:12px;
   }
   .rules-list{
     padding-right:22px;
+    font-size: 1.1rem;
   }
   .rules-list li{
-    margin-bottom:10px;
+    margin-bottom:12px;
     padding-right:4px;
   }
   footer{
     text-align:center;
     color:var(--muted);
-    font-size:0.85rem;
-    padding:26px 20px;
+    font-size:0.95rem;
+    padding:30px 20px;
     border-top:1px solid #eef0ec;
   }
   footer .developer-credit {
     margin-top: 6px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     opacity: 0.85;
   }
 </style>
 </head>
 <body>
+
+<!-- مودال بزرگ‌نمایی تصویر (Lightbox) -->
+<div id="lightboxModal">
+  <span id="lightboxClose">&times;</span>
+  <img id="lightboxImg" src="" alt="تصویر بزرگ‌شده اردوگاه">
+</div>
 
 <header class="hero">
   <div class="hero-inner">
@@ -485,7 +535,7 @@
     <div class="location-box">
       <span class="location-text">استان یزد - شهرستان تفت - ده بالا - اردوگاه تفریحی و آموزشی گلستان</span>
       <a class="map-btn" href="https://balad.ir/p/5bo1pDO2uBAQ1Y" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         مشاهده در بلد
       </a>
     </div>
@@ -506,15 +556,15 @@
         فضای سبز
       </div>
       <div class="facility-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11a8 8 0 0 1 16 0"/><path d="M3 11h18v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2Z"/><path d="M7 19h10"/></svg>
-        آشپزخانه
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        آشپزخانه به همراه لوازم پخت و پز و ظروف
       </div>
       <div class="facility-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c2 3-1 4-1 6a3 3 0 1 0 6 0c0-1-1-2-1-3 2 1 3 4 3 6a7 7 0 1 1-14 0c0-4 3-5 3-9 1 1 2 2 4 0Z"/></svg>
         تجهیزات باربیکیو
       </div>
       <div class="facility-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h10"/></svg>
         تجهیزات گرمایشی
       </div>
     </div>
@@ -526,16 +576,16 @@
       تصاویر اردوگاه
     </h2>
     <div class="gallery">
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
         <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225509_003.jpg" alt="اردوگاه گلستان - تصویر اول">
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
         <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225503_462.jpg" alt="اردوگاه گلستان - تصویر دوم">
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
         <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225510_454.jpg" alt="اردوگاه گلستان - تصویر سوم">
       </div>
-      <div class="gallery-item">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
         <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225514_219.jpg" alt="اردوگاه گلستان - تصویر چهارم">
       </div>
     </div>
@@ -668,6 +718,24 @@
 </footer>
 
 <script>
+  // اسکریپت بزرگ‌نمایی تصاویر (Lightbox)
+  function openLightbox(imgSrc) {
+    const modal = document.getElementById('lightboxModal');
+    const modalImg = document.getElementById('lightboxImg');
+    modal.style.display = 'flex';
+    modalImg.src = imgSrc;
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', function() {
+    document.getElementById('lightboxModal').style.display = 'none';
+  });
+
+  document.getElementById('lightboxModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  });
+
   // آدرس اسکریپت گوگل شیت
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGAeIXmLD_Ib6BQ0sKfpQ2YTbOfAUWm8UPkVfcCB04XDOrz7i8bRCFUGTpEOMzyjgG/exec";
 
@@ -678,10 +746,8 @@
   const contactFields = document.getElementById('contactFields');
   const submitBtn = document.getElementById('submitBtn');
 
-  // متغیر سراسری برای ذخیره مبلغ عددی خام جهت ارسال دقیق به شیت
   let calculatedRawPrice = 0;
 
-  // تبدیل ارقام فارسی/عربی به انگلیسی
   function toEnglishDigits(str) {
     return String(str)
       .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
@@ -725,14 +791,13 @@
       total += extra * extraPersonFee;
     }
 
-    calculatedRawPrice = total; // ذخیره عدد خام
+    calculatedRawPrice = total;
     resultAmount.textContent = formatNumber(total) + ' تومان';
   }
 
   applicantType.addEventListener('change', calculatePrice);
   peopleCount.addEventListener('input', calculatePrice);
 
-  // فعال‌سازی تقویم شمسی
   $(document).ready(function() {
     $(".persian-datepicker-input").pDatepicker({
       format: 'YYYY/MM/DD',
@@ -748,7 +813,6 @@
     });
   });
 
-  // بررسی آزاد بودن تاریخ از گوگل شیت
   function checkDateAvailability(dateStr) {
     statusMessage.style.display = 'block';
     statusMessage.className = 'status-message status-checking';
@@ -786,7 +850,6 @@
     contactFields.style.display = 'block';
   }
 
-  // ارسال داده‌های رزرو به گوگل شیت
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
