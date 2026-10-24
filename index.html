@@ -1,4 +1,4 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<meta name='viewport' content='width=device-width, initial-scale=1'/><meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -483,6 +483,35 @@
     font-size: 0.9rem;
     opacity: 0.85;
   }
+
+  /* پنجره پیام نهایی درخواست */
+  #requestResultModal {
+    display:none; position:fixed; inset:0; z-index:10001;
+    background:rgba(18,35,26,.62); padding:20px;
+    align-items:center; justify-content:center;
+  }
+  #requestResultModal .request-result-card {
+    width:min(100%, 430px); background:#fff; border-radius:22px;
+    padding:28px 24px 22px; text-align:center;
+    box-shadow:0 18px 55px rgba(0,0,0,.24); border:1px solid #e3eee6;
+    animation:requestModalIn .22s ease-out;
+  }
+  #requestResultModal .request-result-icon {
+    width:64px; height:64px; margin:0 auto 14px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:#e8f5ec; color:#267747; font-size:34px; font-weight:bold;
+  }
+  #requestResultModal h3 { color:#1b4d35; font-size:1.55rem; margin-bottom:8px; }
+  #requestResultModal p { color:#414b44; line-height:1.9; margin-bottom:10px; }
+  #requestResultModal .request-result-note { font-size:.95rem; color:#6b716d; }
+  #requestResultClose {
+    border:0; border-radius:12px; background:#1b6b3b; color:#fff;
+    padding:10px 28px; font:inherit; font-size:1.05rem; cursor:pointer;
+    margin-top:10px; min-width:140px;
+  }
+  #requestResultClose:hover { background:#14552e; }
+  @keyframes requestModalIn { from {opacity:0; transform:translateY(8px) scale(.98)} to {opacity:1; transform:translateY(0) scale(1)} }
+
 </style>
 </head>
 <body>
@@ -491,6 +520,17 @@
 <div id="lightboxModal">
   <span id="lightboxClose">&times;</span>
   <img id="lightboxImg" src="" alt="تصویر بزرگ‌شده اردوگاه">
+</div>
+
+<div id="requestResultModal" role="dialog" aria-modal="true" aria-labelledby="requestResultTitle">
+  <div class="request-result-card">
+    <div class="request-result-icon" aria-hidden="true">✓</div>
+    <h3 id="requestResultTitle">درخواست شما ارسال شد</h3>
+    <p>درخواست رزرو شما برای بررسی ارسال شده است.</p>
+    <p>پس از بررسی، نتیجه از طریق شماره همراه ثبت‌شده به شما اطلاع داده خواهد شد.</p>
+    <p class="request-result-note">توجه: ارسال درخواست به معنی تأیید نهایی و قطعی شدن رزرو نیست.</p>
+    <button type="button" id="requestResultClose">متوجه شدم</button>
+  </div>
 </div>
 
 <header class="hero">
@@ -635,6 +675,13 @@
             <label for="fullName">نام و نام خانوادگی متقاضی</label>
             <input type="text" id="fullName" placeholder="مثلاً: محمد کاظمی" required>
           </div>
+          
+          <!-- فیلد پویا: کد پرسنلی یا کد ملی -->
+          <div class="calc-row" id="idNumberRow" style="display:none;">
+            <label id="idNumberLabel" for="idNumberInput">کد پرسنلی</label>
+            <input type="text" id="idNumberInput" placeholder="شماره پرسنلی یا کد ملی خود را وارد کنید">
+          </div>
+
           <div class="calc-row">
             <label for="phone">شماره همراه</label>
             <input type="tel" id="phone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required>
@@ -736,8 +783,8 @@
     }
   });
 
-  // آدرس اسکریپت گوگل شیت
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGAeIXmLD_Ib6BQ0sKfpQ2YTbOfAUWm8UPkVfcCB04XDOrz7i8bRCFUGTpEOMzyjgG/exec";
+  // آدرس اسکریپت گوگل شیت شما
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxY5aBx5-NzwJGQrCyVQlAkDP6k0HOLSArG_pbjOy7jLc616bQa62ZRkVPeYCZwIFbYlQ/exec";
 
   const applicantType = document.getElementById('applicantType');
   const peopleCount = document.getElementById('peopleCount');
@@ -745,10 +792,16 @@
   const statusMessage = document.getElementById('statusMessage');
   const contactFields = document.getElementById('contactFields');
   const submitBtn = document.getElementById('submitBtn');
+  const idNumberRow = document.getElementById('idNumberRow');
+  const idNumberLabel = document.getElementById('idNumberLabel');
+  const idNumberInput = document.getElementById('idNumberInput');
 
   let calculatedRawPrice = 0;
+  let selectedDateWithDay = ''; 
+  let rawDateForCheck = ''; 
 
   function toEnglishDigits(str) {
+    if (!str) return '';
     return String(str)
       .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
       .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
@@ -762,6 +815,20 @@
   function formatNumber(num) {
     return toPersianDigits(num.toLocaleString('en-US'));
   }
+
+  applicantType.addEventListener('change', function() {
+    calculatePrice();
+    idNumberRow.style.display = 'flex';
+    idNumberInput.required = true;
+    
+    if (this.value === 'other') {
+      idNumberLabel.textContent = 'کد ملی';
+      idNumberInput.placeholder = 'کد ملی ۱۰ رقمی خود را وارد کنید';
+    } else {
+      idNumberLabel.textContent = 'کد پرسنلی';
+      idNumberInput.placeholder = 'کد پرسنلی خود را وارد کنید';
+    }
+  });
 
   function calculatePrice() {
     if (!applicantType.value || !peopleCount.value) {
@@ -795,9 +862,11 @@
     resultAmount.textContent = formatNumber(total) + ' تومان';
   }
 
-  applicantType.addEventListener('change', calculatePrice);
   peopleCount.addEventListener('input', calculatePrice);
 
+  // روش ساده و سریع: وضعیت فقط پس از انتخاب تاریخ بررسی می‌شود.
+
+  // فعال‌سازی تقویم شمسی
   $(document).ready(function() {
     $(".persian-datepicker-input").pDatepicker({
       format: 'YYYY/MM/DD',
@@ -807,9 +876,15 @@
       minDate: new persianDate().valueOf(),
       autoClose: true,
       onSelect: function(unix) {
-        let selectedDate = $("#persianDateInput").val();
-        checkDateAvailability(selectedDate);
-      }
+        let pDate = new persianDate(unix);
+        let dayName = pDate.format('dddd');
+        let dateStr = pDate.format('YYYY/MM/DD');
+        const normalizedDate = toEnglishDigits(dateStr);
+        rawDateForCheck = normalizedDate;
+        selectedDateWithDay = `${dayName} - ${dateStr}`;
+        $("#persianDateInput").val(selectedDateWithDay);
+        checkDateAvailability(rawDateForCheck);
+      },
     });
   });
 
@@ -818,38 +893,58 @@
     statusMessage.className = 'status-message status-checking';
     statusMessage.textContent = 'در حال بررسی ظرفیت تاریخ انتخاب شده...';
     contactFields.style.display = 'none';
+    submitBtn.disabled = true;
 
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
-      setTimeout(() => {
-        showAvailableStatus(dateStr);
-      }, 800);
-      return;
-    }
+    // JSONP به‌جای fetch: برای جلوگیری از خطای CORS، مخصوصاً وقتی HTML از فایل محلی باز می‌شود.
+    const callbackName = 'golestanDateCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const script = document.createElement('script');
+    let finished = false;
 
-    fetch(`${GOOGLE_SCRIPT_URL}?action=checkDate&date=${encodeURIComponent(toEnglishDigits(dateStr))}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.available) {
-          showAvailableStatus(dateStr);
-        } else {
-          statusMessage.className = 'status-message status-reserved';
-          statusMessage.textContent = `متأسفانه تاریخ ${dateStr} قبلاً رزرو شده است. لطفاً تاریخ دیگری را انتخاب کنید.`;
-          contactFields.style.display = 'none';
-        }
-      })
-      .catch(err => {
+    const cleanup = () => {
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+
+    const fail = () => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      statusMessage.style.display = 'block';
+      statusMessage.className = 'status-message status-reserved';
+      statusMessage.textContent = 'ارتباط با سامانه رزرو برقرار نشد. آدرس یا انتشار Web App را بررسی کنید و دوباره تلاش کنید.';
+      contactFields.style.display = 'none';
+      submitBtn.disabled = true;
+    };
+
+    window[callbackName] = function(data) {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (data && data.available === true) {
+        showAvailableStatus();
+      } else {
         statusMessage.className = 'status-message status-reserved';
-        statusMessage.textContent = 'خطا در اتصال به سرور رزرو. لطفاً چند لحظه بعد دوباره تلاش کنید.';
+        statusMessage.textContent = (data && data.message) || 'متأسفانه تاریخ انتخابی قبلاً رزرو شده است یا سامانه خطا داده است. لطفاً تاریخ دیگری انتخاب کنید یا تنظیمات سرویس را بررسی کنید.';
         contactFields.style.display = 'none';
-      });
+        submitBtn.disabled = true;
+      }
+    };
+
+    script.onerror = fail;
+    script.src = `${GOOGLE_SCRIPT_URL}?action=checkDate&date=${encodeURIComponent(toEnglishDigits(dateStr))}&callback=${encodeURIComponent(callbackName)}&_=${Date.now()}`;
+    const timeoutId = setTimeout(fail, 15000);
+    document.head.appendChild(script);
   }
 
-  function showAvailableStatus(dateStr) {
+  function showAvailableStatus() {
     statusMessage.className = 'status-message status-available';
-    statusMessage.textContent = `تاریخ ${dateStr} خالی است! مشخصات خود را برای ثبت اولیه وارد کنید.`;
+    statusMessage.textContent = `تاریخ مورد نظر خالی است! مشخصات خود را برای ثبت اولیه وارد کنید.`;
     contactFields.style.display = 'block';
+    submitBtn.disabled = false;
   }
 
+  // ثبت فرم به روش ایمن و ضد بلاک (Hidden Form Submit)
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -861,36 +956,61 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'در حال ثبت رزرو...';
 
-    const formData = {
+    const isStaff = applicantType.value !== 'other';
+
+    // ساخت یک فرم موقت و مخفی برای ارسال مستقیم بدون خطای CORS
+    const hiddenForm = document.createElement('form');
+    hiddenForm.action = GOOGLE_SCRIPT_URL;
+    hiddenForm.method = 'POST';
+    hiddenForm.target = 'hidden_iframe'; // ارسال در پس‌زمینه بدون رفرش صفحه
+
+    const dataPayload = {
       action: 'addBooking',
-      date: toEnglishDigits($("#persianDateInput").val()),
+      date: rawDateForCheck,
+      displayDate: selectedDateWithDay,
       applicantType: applicantType.options[applicantType.selectedIndex].text,
       peopleCount: toEnglishDigits(peopleCount.value),
       price: resultAmount.textContent,
       fullName: document.getElementById('fullName').value,
+      idNumberType: isStaff ? 'کد پرسنلی' : 'کد ملی',
+      idNumber: toEnglishDigits(idNumberInput.value),
       phone: toEnglishDigits(document.getElementById('phone').value)
     };
 
-    if (GOOGLE_SCRIPT_URL.includes("YOUR_SCRIPT_ID")) {
-      alert('درخواست رزرو شما ثبت شد!');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'ثبت رسمی درخواست رزرو';
-      return;
+    for (let key in dataPayload) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = dataPayload[key];
+      hiddenForm.appendChild(input);
     }
 
-    fetch(GOOGLE_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    }).then(() => {
-      alert('درخواست رزرو شما با موفقیت ثبت گردید. پس از بررسی جهت تأیید با شما تماس گرفته خواهد شد.');
-      location.reload();
-    }).catch(err => {
-      alert('خطا در ثبت رزرو. لطفاً مجدداً تلاش کنید.');
+    // ایجاد یک آی‌فریم مخفی برای ارسال بدون رفرش صفحه
+    let iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'hidden_iframe';
+      iframe.name = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    document.body.appendChild(hiddenForm);
+    hiddenForm.submit();
+    document.body.removeChild(hiddenForm);
+
+    setTimeout(() => {
+      document.getElementById('requestResultModal').style.display = 'flex';
       submitBtn.disabled = false;
       submitBtn.textContent = 'ثبت رسمی درخواست رزرو';
-    });
+    }, 1500);
+  });
+
+  document.getElementById('requestResultClose').addEventListener('click', function() {
+    document.getElementById('requestResultModal').style.display = 'none';
+  });
+  document.getElementById('requestResultModal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
   });
 </script>
 
