@@ -1,0 +1,2042 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اردوگاه گلستان | رزرو آنلاین</title>
+
+<!-- بهینه‌سازی اتصال و پیش‌بارگذاری فونت‌ها -->
+<link rel="preconnect" href="https://raw.githubusercontent.com">
+<link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+<link rel="preload" href="https://raw.githubusercontent.com/miralaie/golestan-camp/42ae7090f1450c7e1d99cc319e34c39181225000/IranNastaliq.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="https://raw.githubusercontent.com/miralaie/golestan-camp/222178c6b70bbe54e8eb61f1fe48be252e670f15/B-NAZANIN.TTF" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="https://raw.githubusercontent.com/miralaie/golestan-camp/222178c6b70bbe54e8eb61f1fe48be252e670f15/B%20Titr%20Bold_0.ttf" as="font" type="font/ttf" crossorigin>
+
+<!-- کتابخانه‌های تقویم شمسی -->
+<link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"/>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+<script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+
+<style>
+  @font-face{
+    font-family:"IranNastaliq";
+    src:url("https://raw.githubusercontent.com/miralaie/golestan-camp/42ae7090f1450c7e1d99cc319e34c39181225000/IranNastaliq.ttf") format("truetype");
+    font-weight:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"B Nazanin";
+    src:url("https://raw.githubusercontent.com/miralaie/golestan-camp/222178c6b70bbe54e8eb61f1fe48be252e670f15/B-NAZANIN.TTF") format("truetype");
+    font-weight:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"B Titr";
+    src:url("https://raw.githubusercontent.com/miralaie/golestan-camp/222178c6b70bbe54e8eb61f1fe48be252e670f15/B%20Titr%20Bold_0.ttf") format("truetype");
+    font-weight:normal;
+    font-display:swap;
+  }
+  :root{
+    --green-dark:#1b4d35;
+    --green:#2e8b57;
+    --green-light:#eef7f1;
+    --gold:#b8863f;
+    --gold-light:#f4e9d8;
+    --text:#232323;
+    --muted:#6f7670;
+    --bg:#faf9f6;
+    --card:#ffffff;
+    --radius:18px;
+    --shadow-sm:0 2px 10px rgba(27,77,53,0.06);
+    --shadow-md:0 10px 30px rgba(27,77,53,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"B Nazanin","Tahoma","Segoe UI",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:2.0;
+    font-size:19px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* بنر پیگیری پرداخت در بالای صفحه */
+  #pendingPaymentBanner {
+    display: none;
+    background: #fff8e6;
+    border-bottom: 2px solid var(--gold);
+    padding: 12px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10005;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    font-weight: bold;
+    color: #7a5200;
+  }
+  #pendingPaymentBanner button {
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+
+  header.hero{
+    position:relative;
+    background: 
+      linear-gradient(135deg, rgba(27,77,53,0.65), rgba(46,139,87,0.60)),
+      url('https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225509_003.jpg') center/cover no-repeat;
+    color:#fff;
+    padding:85px 20px 120px;
+    text-align:center;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 36px);
+    pointer-events:none;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-1px;
+    height:48px;
+    background:var(--bg);
+    border-radius:60% 60% 0 0 / 100% 100% 0 0;
+  }
+  header.hero .hero-inner{
+    position:relative;
+    z-index:1;
+  }
+  header.hero .hero-icon{
+    width:56px;
+    height:56px;
+    margin:0 auto 18px;
+    opacity:0.95;
+  }
+  header.hero h1{
+    font-family:"IranNastaliq","B Titr","Tahoma",sans-serif;
+    font-size:6.8rem;
+    font-weight:normal;
+    letter-spacing:0;
+    margin-bottom:12px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    line-height: 1.3;
+  }
+  header.hero .owner-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:22px;
+    background:rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.5);
+    padding:6px 18px;
+    border-radius:30px;
+    font-family:"B Titr", "Tahoma", sans-serif;
+    font-weight:normal;
+    font-size:0.95rem;
+    backdrop-filter:blur(4px);
+  }
+  main{
+    max-width:920px;
+    margin:-60px auto 0;
+    padding:0 20px 70px;
+    position:relative;
+    z-index:2;
+  }
+  section.card{
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-md);
+    padding:38px 36px;
+    margin-bottom:30px;
+    border:1px solid rgba(27,77,53,0.05);
+  }
+
+  /* بهبود یکدستی کارت‌ها و فاصله‌گذاری */
+  section.card{ padding:36px; margin-bottom:28px; border-color:rgba(27,77,53,.06); }
+  section.card h2{ margin-top:0; margin-bottom:22px; line-height:1.55; }
+  @media (max-width:600px){
+    main{ padding-left:16px; padding-right:16px; }
+    section.card{ padding:26px 20px; margin-bottom:22px; }
+    section.card h2{ font-size:1.48rem; gap:9px; padding-right:12px; }
+  }
+
+  section.card h2{
+    font-family:"B Titr","Tahoma",sans-serif;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--green-dark);
+    font-size:1.65rem;
+    letter-spacing:0.2px;
+    margin-bottom:20px;
+    border-right:4px solid var(--gold);
+    padding-right:14px;
+  }
+  section.card h2 svg{
+    width:26px;
+    height:26px;
+    flex-shrink:0;
+  }
+  section.card > p{
+    color:var(--text);
+    font-size:1.1rem;
+  }
+  .facilities{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:16px;
+    margin-top:12px;
+  }
+  .facility-item{
+    background:var(--green-light);
+    border-radius:14px;
+    padding:22px 14px;
+    text-align:center;
+    font-size:1.05rem;
+    color:var(--green-dark);
+    font-weight:700;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .facility-item:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow-sm);
+  }
+  .facility-item svg{
+    width:34px;
+    height:34px;
+    display:block;
+    margin:0 auto 10px;
+    color:var(--green);
+  }
+  .capacity-strip{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid #eef0ec;
+  }
+  .capacity-strip div{
+    text-align:center;
+  }
+  .capacity-strip .num{
+    font-family:"B Titr","Tahoma",sans-serif;
+    font-size:2.3rem;
+    font-weight:800;
+    color:var(--green);
+    display:block;
+  }
+  .capacity-strip .lbl{
+    color:var(--muted);
+    font-size:1rem;
+  }
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:14px;
+    margin-top:10px;
+  }
+  .gallery-item{
+    aspect-ratio:4/3;
+    border-radius:14px;
+    background:var(--green-light);
+    border:1.5px dashed #c9ddcf;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    color:var(--muted);
+    font-size:0.95rem;
+    text-align:center;
+    padding:6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .2s ease;
+  }
+  .gallery-item:hover {
+    transform: scale(1.03);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  .gallery-item img:hover {
+    transform: scale(1.08);
+  }
+
+  #lightboxModal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  #lightboxModal img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  }
+  #lightboxClose {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.4);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  #lightboxClose:hover { background: rgba(255,255,255,0.2); }
+
+  .location-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--green-light);
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 15px;
+    border: 1px solid #d2e5d7;
+  }
+  .location-text {
+    font-weight: 700;
+    color: var(--green-dark);
+    font-size: 1.1rem;
+  }
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-dark);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: background .2s ease;
+  }
+  .map-btn:hover {
+    background: var(--green);
+  }
+
+  .calc-box{
+    background:var(--green-light);
+    border-radius:16px;
+    padding:26px;
+    margin-top:22px;
+    border:1px solid #e2eee6;
+  }
+  .calc-row{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .calc-row label{
+    font-weight:700;
+    color:var(--green-dark);
+    font-size:1.1rem;
+  }
+  .calc-row select, .calc-row input, .calc-row textarea{
+    padding:14px 12px;
+    border-radius:10px;
+    border:1px solid #cfe3d6;
+    font-size:0.95rem;
+    font-family:inherit;
+    background:#fff;
+    transition:border-color .15s ease, box-shadow .15s ease;
+    text-align: center;
+  }
+  .calc-row select:focus, .calc-row input:focus, .calc-row textarea:focus{
+    outline:none;
+    border-color:var(--green);
+    box-shadow:0 0 0 3px rgba(46,139,87,0.15);
+  }
+  
+  .calc-row input.valid-field {
+    border-color: var(--green);
+    background-color: #f4faf6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='%232e8b57' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    padding-left: 42px;
+  }
+
+  .calc-row input.date-available-box {
+    border-color: var(--green) !important;
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    font-weight: bold;
+    font-size: 0.9rem !important;
+    padding: 14px 12px !important;
+    border-radius: 10px !important;
+    width: 100% !important;
+    text-align: center !important;
+    line-height: normal !important;
+  }
+
+  .calc-result{
+    display: none;
+    text-align: center;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1.5px solid var(--gold);
+    box-shadow: var(--shadow-sm);
+    font-size: 1rem;
+  }
+  .calc-result .amount{
+    font-family: "B Titr", "Tahoma", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--green-dark);
+    display: block;
+    margin-top: 4px;
+  }
+
+  .status-message {
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 0.95rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .status-available { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .status-reserved { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  
+  .status-checking { 
+    background: #fff3cd; 
+    color: #856404; 
+    border: 1px solid #ffeeba;
+  }
+  /* وضعیت استعلام: رنگ و نشانه بصری واضح‌تر */
+  .status-message{ padding:13px 14px; border-radius:12px; font-weight:bold; text-align:center; margin-top:10px; font-size:1rem; line-height:1.65; box-shadow:0 3px 10px rgba(27,77,53,.06); }
+  .status-available{ background:#e8f6ec; color:#155c35; border:1px solid #9fd4ae; }
+  .status-reserved{ background:#fff0ef; color:#8c2525; border:1px solid #efb5b1; }
+  .status-checking{ background:#fff8e5; color:#805b08; border:1px solid #efd78a; }
+
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .spinner-loader {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(133, 100, 4, 0.2);
+    border-top: 3px solid #856404;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+  }
+
+  .btn-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top: 2.5px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .error-retry-box {
+    margin-top: 6px;
+    text-align: center;
+  }
+  .retry-btn {
+    background: #721c24;
+    color: #fff;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 4px;
+    transition: background 0.2s;
+  }
+  .retry-btn:hover { background: #a71d2a; }
+
+  .weather-box {
+    display: none;
+    margin-top: 6px;
+    background: #e6f2fd;
+    border: 1.5px solid #8cbcf8;
+    border-radius: 10px;
+    padding: 14px 12px;
+    color: #0f355c;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: bold;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    line-height: normal;
+  }
+  .weather-box.show-weather {
+    display: flex;
+    animation: fadeInScale 0.4s ease-out forwards;
+  }
+
+  .weather-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .weather-left svg {
+    width: 17px; height: 17px; color: #1c5fa8; flex-shrink: 0;
+  }
+  .weather-temp {
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #0a2642;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--green-dark);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .submit-btn:hover { background: var(--green); }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  .datepicker-plot-area { font-family: "B Nazanin", sans-serif !important; }
+
+  .items-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 14px;
+  }
+  .item-card {
+    background: var(--green-light); border-radius: 14px; padding: 22px 16px; border: 1px solid #d2e5d7; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .item-icon {
+    width: 38px; height: 38px; min-width: 38px; min-height: 38px; border-radius: 10px; background: #fff; border: 1px solid #c8e0d1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--green);
+  }
+  .item-icon svg { width: 22px; height: 22px; min-width: 22px; min-height: 22px; }
+  .item-details h4 { color: var(--green-dark); font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+  .item-details p { font-size: 0.95rem; color: var(--text); line-height: 1.6; }
+
+  .faq-list { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+  .faq-item { background: var(--green-light); padding: 18px 22px; border-radius: 12px; border: 1px solid #e2eee6; }
+  .faq-q { font-weight: 700; color: var(--green-dark); margin-bottom: 6px; font-size: 1.15rem; }
+  .faq-a { color: var(--text); font-size: 1.05rem; line-height: 1.9; }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 12px; }
+  .review-card {
+    background: var(--green-light); padding: 20px; border-radius: 14px; border: 1px solid #e2eee6; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .review-text { font-size: 1.05rem; color: var(--text); line-height: 1.9; margin-bottom: 12px; font-style: italic; }
+  .review-author {
+    font-weight: 700; color: var(--green-dark); font-size: 0.98rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #cfe3d6; padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .review-stars { color: var(--gold); font-size: 1rem; }
+
+  @keyframes skeletonPulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+  .skeleton-card {
+    background: #edf3f0 !important;
+    border: 1px solid #d5e2dc !important;
+    animation: skeletonPulse 1.4s infinite ease-in-out;
+  }
+  .skeleton-line {
+    height: 14px;
+    background: #cbdcd4;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .skeleton-line.short { width: 55%; }
+  .skeleton-line.medium { width: 80%; }
+  .skeleton-line.long { width: 100%; }
+
+  .admin-reply-box {
+    background: #ffffff; border-right: 4px solid var(--green); padding: 12px 15px; border-radius: 8px; margin-top: 12px; font-size: 0.98rem; color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .admin-reply-title { font-weight: bold; color: var(--green-dark); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+
+  .note{ font-size:0.95rem; color:var(--muted); margin-top:6px; }
+  .rules-list{ padding-right:22px; font-size: 1.1rem; }
+  .rules-list li{ margin-bottom:12px; padding-right:4px; }
+  footer{ text-align:center; color:var(--muted); font-size:1.05rem; padding:30px 20px; border-top:1px solid #eef0ec; }
+
+  /* مدال عمومی */
+  .modal-overlay {
+    display:none; position:fixed; inset:0; z-index:10001;
+    background:rgba(18,35,26,.62); padding:15px;
+    align-items:center; justify-content:center;
+    backdrop-filter: blur(3px);
+  }
+  
+  /* مدال فاکتور اولیه */
+  .modal-card {
+    width:min(100%, 420px); background:#fff; border-radius:20px;
+    padding:24px 20px 20px; text-align:right;
+    box-shadow:0 18px 55px rgba(0,0,0,.24); border:1px solid #e3eee6;
+    animation:requestModalIn .22s ease-out;
+  }
+
+  /* مدال مینی‌مال پرداخت */
+  .modal-card.minimal-pay {
+    width: min(100%, 360px) !important;
+    padding: 16px 14px !important;
+    text-align: center !important;
+    border-radius: 18px !important;
+    font-size: 1.05rem !important;
+  }
+  .modal-card.minimal-pay h3 {
+    font-size: 1.3rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .modal-card.center { text-align:center; }
+
+  .modal-card.minimal-pay h3{ line-height:1.55; margin-bottom:8px !important; padding-bottom:8px; border-bottom:1px solid #e5eee8; }
+  .payment-amount-panel{ background:#eef7f1; border:1px solid #d0e5d6; border-radius:12px; padding:8px 10px; margin:8px 0 12px; line-height:1.7; }
+  .payment-amount-panel .amount-label{ display:block; color:#587264; font-size:.9rem; }
+  .payment-amount-panel #payModalAmount{ display:block; font-size:1.28rem !important; line-height:1.5; overflow-wrap:anywhere; }
+  .payment-card-section{ padding:8px; border:1px solid #e8eee9; background:#fbfdfb; border-radius:14px; margin-bottom:10px; }
+  .payment-card-caption{ display:block; color:#52685a; font-size:.88rem; margin-bottom:6px; font-weight:bold; }
+  .minimal-time-tag{ margin-top:10px; margin-bottom:10px; border-radius:12px; }
+
+  
+  .invoice-details-box {
+    background: #f4faf6;
+    border: 1px solid #d2e5d7;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 16px;
+    font-size: 0.98rem;
+    line-height: 2.0;
+  }
+  .invoice-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #dbebe2;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+  }
+  .invoice-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+  .invoice-row span:first-child { color: var(--muted); }
+  .invoice-row span:last-child { font-weight: bold; color: var(--green-dark); }
+
+  /* باکس کارت بانکی با تصویر اختصاصی و دکمه‌های کپی روی آن */
+  .card-img-container {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    margin: 10px 0;
+  }
+  .card-img-container img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+  }
+  .card-overlay-actions {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .card-copy-btn {
+    background: rgba(27, 77, 53, 0.9);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 5px 10px;
+    border-radius: 14px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(4px);
+  }
+  .card-copy-btn:hover { background: rgba(46, 139, 87, 0.95); }
+  .card-copy-btn.copied-active {
+    background: #d97706 !important;
+    transform: scale(0.96);
+  }
+
+  /* فونت بزرگ‌تر و خواناتر مخصوص باکس کرم‌رنگ مهلت واریز */
+  .minimal-time-tag {
+    background: #fff8e6;
+    border: 1px solid #f3e2b3;
+    color: #7a5200;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* دکمه نارنجی‌رنگ ایتا کاملاً تک‌خطی و متناسب‌شده */
+  .eitaa-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    color: #fff;
+    padding: 10px 6px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.74rem;
+    width: 100%;
+    margin-top: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 3px 10px rgba(230, 126, 34, 0.25);
+  }
+  .eitaa-link-btn:hover { 
+    background: linear-gradient(135deg, #d35400, #b94000);
+    transform: translateY(-1px);
+  }
+  .eitaa-logo-img {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+  /* استایل شیک آیدی در دکمه نارنجی؛ بدون تغییر اندازه یا چیدمان دکمه */
+  .eitaa-handle {
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.15px;
+    direction: ltr;
+    unicode-bidi: isolate;
+    font-size: 1em;
+  }
+
+  /* پیوند آیکون‌دار ایتا در مرحله سوم ثبت درخواست */
+  .steps-eitaa-wrap {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0;
+    padding: 0;
+    clear: both;
+    /* جبران فاصله‌ی داخلی لیست شماره‌دار تا مرکز باکس با مرکز کارت یکی شود */
+    transform: translateX(22px);
+  }
+  .steps-eitaa-link {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 5px;
+    margin: 0;
+    padding: 2px 9px;
+    border-radius: 8px;
+    background: #e8f4ff;
+    border: 1px solid #b9dcf8;
+    color: #15583f;
+    text-decoration: none;
+    font-family: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+    font-size: 1.08em;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    direction: ltr;
+  }
+  .steps-eitaa-link img {
+    width: 21px;
+    height: 21px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .steps-eitaa-link:hover {
+    background: #e0f2e9;
+    border-color: #8dc5a9;
+    text-decoration: underline;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .modal-btn {
+    flex: 1;
+    border: 0; border-radius: 10px; background:#1b6b3b; color:#fff;
+    padding: 9px; font: inherit; font-size: 1rem; cursor: pointer;
+    font-weight: bold; text-align: center;
+  }
+  .modal-btn:hover { background:#14552e; }
+  .modal-btn.secondary { background: #e2e8e4; color: #333; font-size: 1rem; padding: 9px; }
+  .modal-btn.secondary:hover { background: #d0d8d3; }
+
+  @keyframes requestModalIn { from {opacity:0; transform:translateY(8px) scale(.98)} to {opacity:1; transform:translateY(0) scale(1)} }
+
+  /* تنظیم نهایی واکنش‌گرایی موبایل پس از قواعد اصلی عنوان‌ها */
+  @media (max-width:600px){
+    main{ padding-left:16px; padding-right:16px; }
+    section.card{ padding:26px 20px; margin-bottom:22px; }
+    section.card h2{ font-size:1.48rem; gap:9px; padding-right:12px; margin-bottom:18px; }
+    .modal-card.minimal-pay{ padding:16px 14px !important; }
+  }
+
+
+
+  /* تراز یکدست متن‌های توضیحی فارسی */
+  section.card p,
+  section.card li,
+  .faq-a,
+  .review-text,
+  .item-details p,
+  .about-text,
+  .section-description {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.9;
+    overflow-wrap: anywhere;
+  }
+  /* عنوان‌ها، پیام‌های وضعیت و اجزای تعاملی از جاستیفای مستثنا هستند */
+  section.card h2,
+  .faq-q,
+  .calc-row label,
+  .status-message,
+  .steps-eitaa-wrap,
+  .steps-eitaa-link,
+  button,
+  .btn,
+  .submit-btn,
+  .calc-result,
+  footer {
+    text-align: center;
+  }
+  .rules-list li,
+  ol.rules-list li {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.9;
+    padding-left: 4px;
+  }
+  @media (max-width: 600px) {
+    section.card p,
+    section.card li,
+    .faq-a,
+    .review-text,
+    .item-details p,
+    .about-text,
+    .section-description {
+      line-height: 1.85;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- بنر شناور پیگیری پرداخت در صورت ریلود شدن صفحه یا بستن مدال -->
+<div id="pendingPaymentBanner">
+  ⚠️ شما یک درخواست رزرو در انتظار واریز وجه دارید. 
+  <button onclick="openPaymentModalFromStorage()" style="background:var(--gold); color:#fff; border:none; padding:6px 14px; border-radius:8px; margin-right:8px;">مشاهده اطلاعات واریز</button>
+  <button onclick="clearPendingPayment()" style="background:transparent; color:#721c24; border:none; margin-right:8px; font-size:0.9rem;">بستن و لغو پیگیری</button>
+</div>
+
+<div id="lightboxModal">
+  <span id="lightboxClose">&times;</span>
+  <img id="lightboxImg" src="" alt="تصویر بزرگ‌شده اردوگاه">
+</div>
+
+<!-- مدال پیش‌نمایش فاکتور اولیه -->
+<div id="invoiceModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="invoiceTitle">
+  <div class="modal-card">
+    <h3 id="invoiceTitle" style="text-align:center; font-size:1.35rem; color:var(--green-dark);">پیش‌نمایش فاکتور رزرو</h3>
+    <p style="text-align:center; font-size:0.88rem; margin-bottom:12px; color:var(--muted);">اطلاعات زیر را تایید کنید:</p>
+    
+    <div class="invoice-details-box" id="invoiceDetailsContent">
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" id="confirmInvoiceBtn" class="modal-btn">تایید و ثبت نهایی</button>
+      <button type="button" id="cancelInvoiceBtn" class="modal-btn secondary">ویرایش</button>
+    </div>
+  </div>
+</div>
+
+<!-- مدال مینی‌مال اطلاعات پرداخت با عکس کارت بانکی و دکمه ایتا اصلاح‌شده -->
+<div id="paymentModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card minimal-pay">
+    <h3 style="color:var(--green-dark);">اطلاعات واریز وجه</h3>
+    
+    <div class="payment-amount-panel">
+      <span class="amount-label">مبلغ نهایی قابل واریز</span>
+      <strong id="payModalAmount" style="color:var(--green-dark);">--</strong>
+    </div>
+
+    <!-- بخش کارت بانکی با تفکیک بصری؛ دکمه‌های کپی و اندازه باکس نارنجی حفظ می‌شوند -->
+    <div class="payment-card-section">
+      <span class="payment-card-caption">شماره کارت و اطلاعات واریز</span>
+      <div class="card-img-container">
+      <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/f7d2921ddda2140453726d099aaf9e4aa772f709/1793026918950.jpg" alt="کارت بانکی ملی">
+      <div class="card-overlay-actions">
+        <button type="button" class="card-copy-btn" id="copyCardBtn" onclick="copyCardNumber()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>کپی شماره کارت</span>
+        </button>
+        <button type="button" class="card-copy-btn" id="copyAllBtn" style="background: rgba(46,139,87,0.9);" onclick="copyAllPaymentInfo()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>کپی تمام اطلاعات</span>
+        </button>
+      </div>
+      </div>
+    </div>
+
+    <!-- متن کرم‌رنگ با فونت درشت‌تر -->
+    <div class="minimal-time-tag">
+      ⏳ پس از واریز وجه، تصویر رسید، طی یک ساعت آینده، در ایتا ارسال شود.
+    </div>
+
+    <!-- دکمه نارنجی‌رنگ ایتا کاملاً متناسب و تک‌خطی -->
+    <a href="https://eitaa.com/GolestanCamp" target="_blank" rel="noopener noreferrer" class="eitaa-link-btn">
+      <img class="eitaa-logo-img" src="https://raw.githubusercontent.com/Yazdest/golestancamp/a41acfaa3fdc0feb9c2b9e49309461bb0c64896b/eitaa-.svg" alt="ایتا">
+      <span>ارسال تصویر رسید به آیدی <bdi class="eitaa-handle">@GolestanCamp</bdi> در ایتا (کلیک کنید)</span>
+    </a>
+
+    <button type="button" id="paymentModalClose" class="modal-btn secondary" style="margin-top:8px; width:100%; padding:7px;">متوجه شدم</button>
+  </div>
+</div>
+
+<div id="commentResultModal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card center" style="width:min(100%, 360px);">
+    <h3 style="color:var(--green-dark); font-size:1.25rem;">نظر شما ثبت شد</h3>
+    <p style="font-size:0.9rem; margin-top:8px;">پس از بررسی مدیریت، در بخش نظرات قرار خواهد گرفت.</p>
+    <button type="button" id="commentResultClose" class="modal-btn" style="margin-top:14px; width:100%;">تایید</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+      <path d="M12 3 3 19h18L12 3Z" stroke-linejoin="round"/>
+      <path d="M12 9 6.5 19h11L12 9Z" stroke-linejoin="round"/>
+      <path d="M12 3v16" stroke-opacity="0.6"/>
+    </svg>
+    <h1>اردوگاه گلستان</h1>
+    <span class="owner-badge">وابسته به اداره آموزش و پرورش استثنایی استان یزد</span>
+  </div>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      درباره ی اردوگاه
+    </h2>
+    <p>
+      اردوگاه گلستان با فضایی سرسبز و امکانات رفاهی مناسب، مکانی ایده‌آل برای برگزاری اردوها،
+      گردهمایی‌ها و مراسم گروهی است. درخواست رزرو به صورت کامل آنلاین بررسی می‌شود و نیازی به
+      تماس تلفنی نیست -- همه ی اطلاعات لازم را در همین صفحه ببینید و فرم درخواست را تکمیل کنید.
+    </p>
+    <div class="capacity-strip">
+      <div>
+        <span class="num">۱۰۰ نفر</span>
+        <span class="lbl">ظرفیت کل اردوگاه</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      موقعیت مکانی و لوکیشن
+    </h2>
+    <p>برای دسترسی آسان به اردوگاه گلستان، می‌توانید از طریق نقشه زیر مسیریابی کنید:</p>
+    <div class="location-box">
+      <span class="location-text">استان یزد - شهرستان تفت - ده بالا - اردوگاه تفریحی و آموزشی گلستان</span>
+      <a class="map-btn" href="https://balad.ir/p/5bo1pDO2uBAQ1Y" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+        مشاهده در بلد
+      </a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+      امکانات اردوگاه
+    </h2>
+    <div class="facilities">
+      <div class="facility-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 21V10l8-6 8 6v11"/><path d="M9 21v-7h6v7"/></svg>
+        تالارهای پذیرایی
+      </div>
+      <div class="facility-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M12 12C7 12 5 9 5 5c4 0 7 2 7 7Z"/><path d="M12 12c5 0 7-3 7-7-4 0-7 2-7 7Z"/></svg>
+        فضای سبز
+      </div>
+      <div class="facility-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        آشپزخانه به همراه لوازم پخت و پز و ظروف
+      </div>
+      <div class="facility-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2c2 3-1 4-1 6a3 3 0 1 0 6 0c0-1-1-2-1-3 2 1 3 4 3 6a7 7 0 1 1-14 0c0-4 3-5 3-9 1 1 2 2 4 0Z"/></svg>
+        تجهیزات باربیکیو
+      </div>
+      <div class="facility-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h10"/></svg>
+        تجهیزات گرمایشی
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 16l3-8 3 8H16z"/><path d="M2 20h20"/><path d="M5 20l3-8 3 8H5z"/><path d="M9 7a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/></svg>
+      راهنمای وسایل مورد نیاز
+    </h2>
+    <p>جهت داشتن اقامتی آسوده و بدون مشکل، توصیه می‌شود وسایل زیر را همراه خود داشته باشید:</p>
+    <div class="items-grid">
+      <div class="item-card">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.38 3.46 16 2l-4 3-4-3-4.38 1.46a2 2 0 0 0-1.34 1.89v12.28a2 2 0 0 0 1.34 1.89L8 21l4-3 4 3 4.38-1.46a2 2 0 0 0 1.34-1.89V5.35a2 2 0 0 0-1.34-1.89z"/></svg>
+        </div>
+        <div class="item-details">
+          <h4>لباس گرم</h4>
+          <p>به ویژه در فصول سرد و خنک سال جهت شب‌های خنک و دل‌پذیر ده بالا.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+        </div>
+        <div class="item-details">
+          <h4>ملحفه شخصی</h4>
+          <p>برای رعایت بهداشت فردی و استفاده روی تخت‌ها و سرویس خواب.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M6 15h12l-1.5-9h-9L6 15zM12 3v3"/></svg>
+        </div>
+        <div class="item-details">
+          <h4>ظروف اضافی</h4>
+          <p>در صورت ازدیاد همراهان و گروه‌های با تعداد بالا.</p>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
+        <div class="item-details">
+          <h4>ذغال</h4>
+          <p>در صورت تمایل به استفاده از منقل و امکانات باربیکیو اردوگاه.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+      تصاویر اردوگاه
+    </h2>
+    <div class="gallery">
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225509_003.jpg" alt="اردوگاه گلستان - تصویر اول" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225503_462.jpg" alt="اردوگاه گلستان - تصویر دوم" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225510_454.jpg" alt="اردوگاه گلستان - تصویر سوم" loading="lazy">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(this.querySelector('img').src)">
+        <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/eea3217166d1f2bfb529ec36d8e2daab92f620b4/IMG_20261023_225514_219.jpg" alt="اردوگاه گلستان - تصویر چهارم" loading="lazy">
+      </div>
+    </div>
+    <p class="note">تصاویر واقعی محوطه و امکانات اردوگاه گلستان</p>
+  </section>
+
+  <section class="card" id="booking-section">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/><circle cx="12" cy="12" r="5"/></svg>
+      محاسبه هزینه و استعلام آنلاین تاریخ رزرو
+    </h2>
+    
+    <div class="calc-box">
+      <form id="bookingForm">
+        <div class="calc-row">
+          <label for="applicantType">نوع متقاضی</label>
+          <select id="applicantType" required oninvalid="this.setCustomValidity('لطفاً نوع متقاضی را انتخاب کنید.')" oninput="this.setCustomValidity('')">
+            <option value="" disabled selected>لطفاً انتخاب کنید...</option>
+            <option value="special">کارکنان آموزش و پرورش استثنایی</option>
+            <option value="staff">کارکنان آموزش و پرورش عادی</option>
+            <option value="other">خارج از آموزش و پرورش</option>
+          </select>
+        </div>
+
+        <div class="calc-row">
+          <label for="peopleCount">تعداد کل نفرات (حداکثر ۱۰۰ نفر)</label>
+          <input type="text" id="peopleCount" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" placeholder="مثلاً: ۱۵" required 
+                 oninvalid="this.setCustomValidity('لطفاً تعداد نفرات را به صورت صحیح وارد کنید.')" oninput="this.setCustomValidity('')" />
+        </div>
+
+        <div class="calc-row">
+          <label for="persianDateInput">انتخاب تاریخ رزرو (شمسی)</label>
+          <input type="text" id="persianDateInput" class="persian-datepicker-input" placeholder="تاریخ مورد نظر را انتخاب کنید..." readonly required 
+                 oninvalid="this.setCustomValidity('لطفاً تاریخ رزرو را انتخاب کنید.')" oninput="this.setCustomValidity('')" />
+          <input type="hidden" id="altDateInput">
+        </div>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div id="weatherBox" class="weather-box">
+          <div class="weather-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            <span>ده‌بالا: <strong id="weatherCondition">در حال استعلام...</strong></span>
+          </div>
+          <div>
+            دما: <span id="weatherTemp" class="weather-temp">--</span>
+          </div>
+        </div>
+
+        <div class="calc-result" id="calcResultBox">
+          مبلغ قابل پرداخت
+          <span class="amount" id="resultAmount">-- تومان</span>
+        </div>
+
+        <div id="contactFields" style="display:none; margin-top:20px; border-top: 1px solid #cfe3d6; padding-top: 15px;">
+          <div class="calc-row">
+            <label for="fullName">نام و نام خانوادگی متقاضی</label>
+            <input type="text" id="fullName" placeholder="مثلاً: محمد کاظمی" required 
+                   oninvalid="this.setCustomValidity('لطفاً نام و نام خانوادگی خود را وارد کنید.')" oninput="this.setCustomValidity('')">
+          </div>
+          
+          <div class="calc-row" id="idNumberRow" style="display:none;">
+            <label id="idNumberLabel" for="idNumberInput">کد پرسنلی</label>
+            <input type="text" id="idNumberInput" inputmode="numeric" pattern="[0-9]*" maxlength="10" autocomplete="off" placeholder="شماره پرسنلی یا کد ملی خود را وارد کنید"
+                   oninvalid="this.setCustomValidity('لطفاً این فیلد را به صورت کامل پر کنید.')" oninput="this.setCustomValidity('')">
+          </div>
+
+          <div class="calc-row">
+            <label for="phone">شماره همراه (شروع با 09)</label>
+            <input type="tel" id="phone" inputmode="numeric" pattern="09[0-9]{9}" maxlength="11" autocomplete="off" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required
+                   oninvalid="this.setCustomValidity('لطفاً شماره همراه معتبر ۱۱ رقمی با شروع ۰۹ وارد کنید.')" oninput="this.setCustomValidity('')">
+          </div>
+          <button type="submit" id="submitBtn" class="submit-btn">ثبت رسمی درخواست رزرو</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      مراحل ثبت درخواست
+    </h2>
+    <ol class="rules-list">
+      <li>تاریخ مورد نظر خود را از تقویم شمسی بالا انتخاب و ظرفیت آن را آنلاین استعلام بگیرید.</li>
+      <li>در صورت آزاد بودن تاریخ، نام و شماره تماس خود را وارد نموده و درخواست را ثبت کنید.</li>
+      <li>
+        مبلغ نهایی به شماره کارت نمایش داده شده در فاکتور، واریز شده و تصویر رسید، نهایتا تا یک ساعت بعد، به آیدی ذیل در ایتا ارسال شود.
+        <span class="steps-eitaa-wrap"><a class="steps-eitaa-link" href="https://eitaa.com/GolestanCamp" target="_blank" rel="noopener noreferrer" aria-label="ورود به ایتا و ارسال تصویر رسید به آیدی GolestanCamp">
+          <img src="https://raw.githubusercontent.com/Yazdest/golestancamp/a41acfaa3fdc0feb9c2b9e49309461bb0c64896b/eitaa-.svg" alt="آیکون ایتا">
+          <span dir="ltr">@GolestanCamp</span>
+        </a></span>
+      </li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      قوانین و مقررات اردوگاه
+    </h2>
+    <ul class="rules-list">
+      <li><strong>ساعات تحویل و تخلیه:</strong> زمان تحویل اردوگاه ساعت ۱۸:۰۰ عصر و تخلیه ساعت ۱۸:۰۰ روز بعد می‌باشد.</li>
+      <li><strong>نظافت و حفظ اموال:</strong> گروه‌ها موظفند محیط اردوگاه و وسایل را همان‌گونه که تحویل گرفته‌اند پاکیزه تحویل دهند.</li>
+      <li><strong>رعایت شئونات:</strong> رعایت کامل شئونات اسلامی و اخلاقی در محیط اردوگاه الزامی است.</li>
+      <li><strong>کنسلی و استرداد:</strong> لغو رزرو تا ۴۸ ساعت قبل از تاریخ با کسر ۲۰ درصد کارمزد امکان‌پذیر است.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      نظرات و تجربیات میهمانان
+    </h2>
+    
+    <div id="reviewsContainer" class="reviews-grid">
+      <div class="review-card skeleton-card">
+        <div>
+          <div class="skeleton-line long"></div>
+          <div class="skeleton-line medium"></div>
+        </div>
+        <div class="skeleton-line short" style="margin-top:15px;"></div>
+      </div>
+      <div class="review-card skeleton-card">
+        <div>
+          <div class="skeleton-line long"></div>
+          <div class="skeleton-line short"></div>
+        </div>
+        <div class="skeleton-line medium" style="margin-top:15px;"></div>
+      </div>
+    </div>
+
+    <div class="calc-box" style="margin-top: 30px;">
+      <h3 style="color: var(--green-dark); margin-bottom: 15px; font-size: 1.2rem;">شما هم نظر خود را بنویسید</h3>
+      <form id="commentForm">
+        <div class="calc-row">
+          <label for="commentName">نام و نام خانوادگی</label>
+          <input type="text" id="commentName" placeholder="مثلاً: علی رضایی" required 
+                 oninvalid="this.setCustomValidity('لطفاً نام خود را وارد کنید.')" oninput="this.setCustomValidity('')">
+        </div>
+        <div class="calc-row">
+          <label for="commentRating">امتیاز شما</label>
+          <select id="commentRating">
+            <option value="5">★★★★★ (۵ ستاره - عالی)</option>
+            <option value="4">★★★★☆ (۴ ستاره - خوب)</option>
+            <option value="3">★★★☆☆ (۳ ستاره - متوسط)</option>
+            <option value="2">★★☆☆☆ (۲ ستاره - ضعیف)</option>
+            <option value="1">★☆☆☆☆ (۱ ستاره - خیلی ضعیف)</option>
+          </select>
+        </div>
+        <div class="calc-row">
+          <label for="commentText">متن نظر</label>
+          <textarea id="commentText" rows="4" placeholder="تجربه خود از حضور در اردوگاه گلستان را بنویسید..." required
+                    oninvalid="this.setCustomValidity('لطفاً متن نظر خود را بنویسید.')" oninput="this.setCustomValidity('')"></textarea>
+        </div>
+        <button type="submit" id="submitCommentBtn" class="submit-btn">ارسال نظر</button>
+      </form>
+    </div>
+  </section>
+
+
+
+  <section class="card">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      سوالات متداول
+    </h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">ساعت تحویل و تخلیه ی اردوگاه چه زمانی است؟</div>
+        <div class="faq-a">زمان تحویل اردوگاه ساعت ۱۸:۰۰ عصر تاریخ رزرو و ساعت تخلیه ساعت ۱۸:۰۰ عصر روز بعد می‌باشد.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">آیا امکان لغو رزرو و استرداد وجه وجود دارد؟</div>
+        <div class="faq-a">تا ۴۸ ساعت قبل از تاریخ رزرو با کسر ۲۰ درصد کارمزد امکان‌پذیر است.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>کلیه حقوق این سامانه متعلق به اداره آموزش و پرورش استثنایی استان یزد می‌باشد.</div>
+</footer>
+
+<script>
+  function openLightbox(imgSrc) {
+    const modal = document.getElementById('lightboxModal');
+    const modalImg = document.getElementById('lightboxImg');
+    modal.style.display = 'flex';
+    modalImg.src = imgSrc;
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', function() {
+    document.getElementById('lightboxModal').style.display = 'none';
+  });
+
+  document.getElementById('lightboxModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  });
+
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGYEOkTy0w5MOUuXEApb4avJ7beoogLQMrG-4SsvKYXFET_ktWFSzSe_-811CAtLsC/exec";
+  // سامانه قبلی نظرات حفظ می‌شود تا بخش دیدگاه‌ها از کار نیفتد.
+  const COMMENTS_SCRIPT_URL = GOOGLE_SCRIPT_URL; // نظرات و رزروها از یک وب‌اپ مدیریت می‌شوند.
+
+  const applicantType = document.getElementById('applicantType');
+  const peopleCount = document.getElementById('peopleCount');
+  const resultAmount = document.getElementById('resultAmount');
+  const calcResultBox = document.getElementById('calcResultBox');
+  const statusMessage = document.getElementById('statusMessage');
+  const weatherBox = document.getElementById('weatherBox');
+  const weatherCondition = document.getElementById('weatherCondition');
+  const weatherTemp = document.getElementById('weatherTemp');
+  const contactFields = document.getElementById('contactFields');
+  const submitBtn = document.getElementById('submitBtn');
+  const idNumberRow = document.getElementById('idNumberRow');
+  const idNumberLabel = document.getElementById('idNumberLabel');
+  const idNumberInput = document.getElementById('idNumberInput');
+  const phoneInput = document.getElementById('phone');
+  const persianDateInput = document.getElementById('persianDateInput');
+
+  let calculatedRawPrice = 0;
+  let selectedDateWithDay = ''; 
+  let rawDateForCheck = ''; 
+  let lastCheckedDate = '';
+  let globalWeatherData = null;
+
+  function preloadWeatherData() {
+    const lat = 31.6210;
+    const lon = 54.1205;
+    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
+
+    fetch(weatherApiUrl)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.daily) {
+          globalWeatherData = data.daily;
+        }
+      })
+      .catch(() => {});
+  }
+
+  function toEnglishDigits(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+      .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  }
+
+  function toPersianDigits(num) {
+    const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+    return num.toString().replace(/[0-9]/g, d => persian[d]);
+  }
+
+  function formatNumber(num) {
+    return toPersianDigits(num.toLocaleString('en-US'));
+  }
+
+  function updateValidationVisual(input, isValid) {
+    if (isValid) {
+      input.classList.add('valid-field');
+    } else {
+      input.classList.remove('valid-field');
+    }
+  }
+
+  applicantType.addEventListener('change', function() {
+    checkAndShowPrice();
+    idNumberRow.style.display = 'flex';
+    idNumberInput.required = true;
+    
+    if (this.value === 'other') {
+      idNumberLabel.textContent = 'کد ملی';
+      idNumberInput.placeholder = 'کد ملی ۱۰ رقمی خود را وارد کنید';
+      idNumberInput.maxLength = 10;
+    } else {
+      idNumberLabel.textContent = 'کد پرسنلی';
+      idNumberInput.placeholder = 'کد پرسنلی ۸ رقمی خود را وارد کنید';
+      idNumberInput.maxLength = 8;
+    }
+    idNumberInput.value = idNumberInput.value.slice(0, idNumberInput.maxLength);
+    
+    const requiredLen = this.value === 'other' ? 10 : 8;
+    updateValidationVisual(idNumberInput, idNumberInput.value.length === requiredLen);
+  });
+
+  function restrictToDigits(input, getMaxLength, validatorCallback) {
+    input.addEventListener('input', function() {
+      const max = getMaxLength();
+      let v = toEnglishDigits(this.value).replace(/[^0-9]/g, '');
+      if (max) v = v.slice(0, max);
+      if (this.value !== v) this.value = v;
+      
+      if (validatorCallback) {
+        validatorCallback(this, v);
+      }
+    });
+    input.addEventListener('keypress', function(e) {
+      if (e.ctrlKey || e.metaKey || e.key.length > 1) return;
+      if (!/[0-9۰-۹٠-٩]/.test(e.key)) e.preventDefault();
+    });
+    input.addEventListener('paste', function(e) {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      const digits = toEnglishDigits(text).replace(/[^0-9]/g, '');
+      const max = getMaxLength();
+      const start = this.selectionStart, end = this.selectionEnd;
+      let v = this.value.slice(0, start) + digits + this.value.slice(end);
+      if (max) v = v.slice(0, max);
+      this.value = v;
+      this.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
+
+  restrictToDigits(idNumberInput, () => applicantType.value === 'other' ? 10 : 8, (el, val) => {
+    const requiredLen = applicantType.value === 'other' ? 10 : 8;
+    updateValidationVisual(el, val.length === requiredLen);
+  });
+
+  restrictToDigits(phoneInput, () => 11, (el, val) => {
+    const isValidPhone = /^09[0-9]{9}$/.test(val);
+    updateValidationVisual(el, isValidPhone);
+  });
+
+  restrictToDigits(peopleCount, () => 3, (el, val) => {
+    let num = parseInt(val, 10);
+    if (!isNaN(num) && num > 100) {
+      el.value = '100';
+      num = 100;
+    }
+    const isValid = !isNaN(num) && num > 0 && num <= 100;
+    updateValidationVisual(el, isValid);
+  });
+
+  function checkAndShowPrice() {
+    const isDateSelected = persianDateInput.classList.contains('date-available-box');
+    const isTypeSelected = applicantType.value !== '';
+    const isPeopleValid = peopleCount.value && parseInt(toEnglishDigits(peopleCount.value), 10) > 0;
+
+    if (isDateSelected && isTypeSelected && isPeopleValid) {
+      calculatePrice();
+      calcResultBox.style.display = 'block';
+    } else {
+      calcResultBox.style.display = 'none';
+      calculatedRawPrice = 0;
+    }
+  }
+
+  function calculatePrice() {
+    let people = parseInt(toEnglishDigits(peopleCount.value), 10);
+    if (isNaN(people) || people < 1) {
+      calculatedRawPrice = 0;
+      return;
+    }
+
+    const basePeople = 15;
+    const extraPersonFee = 100000;
+    let basePrice;
+    
+    if (applicantType.value === 'special') basePrice = 1600000;
+    else if (applicantType.value === 'staff') basePrice = 2000000;
+    else basePrice = 2500000;
+
+    let total = basePrice;
+    if (people > basePeople) {
+      const extra = people - basePeople;
+      total += extra * extraPersonFee;
+    }
+
+    calculatedRawPrice = total;
+    resultAmount.textContent = formatNumber(total) + ' تومان';
+  }
+
+  peopleCount.addEventListener('input', function() {
+    let val = parseInt(toEnglishDigits(this.value), 10);
+    if (!isNaN(val) && val > 100) {
+      this.value = '100';
+    }
+    checkAndShowPrice();
+  });
+
+  $(document).ready(function() {
+    preloadWeatherData();
+
+    checkPendingPaymentOnLoad();
+
+    let today = new persianDate();
+    let year = today.year();
+    let month = today.month();
+    
+    let lastDay;
+    if (month <= 6) {
+      lastDay = 31;
+    } else if (month <= 11) {
+      lastDay = 30;
+    } else {
+      lastDay = today.isLeapYear() ? 30 : 29;
+    }
+    
+    let endOfMonthDate = new persianDate([year, month, lastDay]).valueOf();
+
+    $(".persian-datepicker-input").pDatepicker({
+      format: 'YYYY/MM/DD',
+      altField: '#altDateInput',
+      altFormat: 'YYYY/MM/DD',
+      initialValue: false,
+      minDate: new persianDate().valueOf(),
+      maxDate: endOfMonthDate,
+      autoClose: true,
+      onSelect: function(unix) {
+        let pDate = new persianDate(unix);
+        let dayName = pDate.format('dddd');
+        let dateStr = pDate.format('YYYY/MM/DD');
+        const normalizedDate = toEnglishDigits(dateStr);
+        rawDateForCheck = normalizedDate;
+        lastCheckedDate = normalizedDate;
+        selectedDateWithDay = `${dayName} - ${dateStr}`;
+        $("#persianDateInput").val(selectedDateWithDay);
+        
+        let gDate = pDate.toDate(); 
+        
+        checkDateAvailability(rawDateForCheck, gDate);
+        prepareDynamicWeather(gDate);
+      },
+    });
+    
+    loadComments();
+  });
+
+  function prepareDynamicWeather(gDate) {
+    const isoDate = gDate.toISOString().split('T')[0];
+
+    if (globalWeatherData && globalWeatherData.time) {
+      const idx = globalWeatherData.time.indexOf(isoDate);
+      if (idx !== -1) {
+        setWeatherValues(globalWeatherData, idx);
+        return;
+      }
+    }
+
+    weatherCondition.textContent = `در حال استعلام...`;
+    weatherTemp.textContent = `--`;
+
+    const lat = 31.6210;
+    const lon = 54.1205;
+    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
+
+    fetch(weatherApiUrl)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.daily && data.daily.time) {
+          globalWeatherData = data.daily;
+          const idx = data.daily.time.indexOf(isoDate);
+          if (idx !== -1) {
+            setWeatherValues(data.daily, idx);
+            return;
+          }
+        }
+        fallbackWeatherEstimate(gDate);
+      })
+      .catch(() => {
+        fallbackWeatherEstimate(gDate);
+      });
+  }
+
+  function setWeatherValues(dailyObj, idx) {
+    const minT = Math.round(dailyObj.temperature_2m_min[idx]);
+    const maxT = Math.round(dailyObj.temperature_2m_max[idx]);
+    const wCode = dailyObj.weather_code[idx];
+
+    let conditionStr = "صاف و آفتابی";
+    if ([1, 2, 3].includes(wCode)) conditionStr = "کمی نیمه‌ابری";
+    else if ([45, 48].includes(wCode)) conditionStr = "مه‌آلود";
+    else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(wCode)) conditionStr = "بارانی";
+    else if ([71, 73, 75, 77, 85, 86].includes(wCode)) conditionStr = "برفی و سرد";
+
+    weatherCondition.textContent = conditionStr;
+    weatherTemp.textContent = toPersianDigits(minT) + ' تا ' + toPersianDigits(maxT) + ' °C';
+  }
+
+  function fallbackWeatherEstimate(gDate) {
+    const monthNum = new persianDate(gDate).month();
+    let conditionStr = "صاف و آفتابی";
+    let minT = 12, maxT = 22;
+
+    if (monthNum >= 1 && monthNum <= 2) { minT = 8; maxT = 18; conditionStr = "ملایم"; }
+    else if (monthNum >= 3 && monthNum <= 5) { minT = 16; maxT = 28; conditionStr = "مطبوع"; }
+    else if (monthNum >= 6 && monthNum <= 8) { minT = 14; maxT = 24; conditionStr = "خنک"; }
+    else { minT = -2; maxT = 10; conditionStr = "سرد"; }
+
+    weatherCondition.textContent = conditionStr;
+    weatherTemp.textContent = toPersianDigits(minT) + ' تا ' + toPersianDigits(maxT) + ' °C';
+  }
+
+  function checkDateAvailability(dateStr, gDate) {
+    statusMessage.style.display = 'flex';
+    statusMessage.className = 'status-message status-checking';
+    statusMessage.innerHTML = `<span class="spinner-loader"></span> در حال استعلام ظرفیت`;
+    weatherBox.classList.remove('show-weather');
+    contactFields.style.display = 'none';
+    calcResultBox.style.display = 'none';
+    submitBtn.disabled = true;
+    persianDateInput.classList.remove('date-available-box');
+
+    const callbackName = 'golestanDateCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const script = document.createElement('script');
+    let finished = false;
+
+    const cleanup = () => {
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try { delete window[callbackName]; } catch (_) {}
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+
+    const fail = () => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      statusMessage.style.display = 'flex';
+      statusMessage.className = 'status-message status-reserved';
+      statusMessage.innerHTML = `
+        خطا در برقراری ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.
+        <div class="error-retry-box">
+          <button type="button" class="retry-btn" onclick="retryDateCheck()">تلاش مجدد</button>
+        </div>
+      `;
+      weatherBox.classList.remove('show-weather');
+      contactFields.style.display = 'none';
+      calcResultBox.style.display = 'none';
+      submitBtn.disabled = true;
+      persianDateInput.classList.remove('date-available-box');
+    };
+
+    window[callbackName] = function(data) {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      if (data && data.available === true) {
+        showAvailableStatus();
+      } else {
+        statusMessage.className = 'status-message status-reserved';
+        statusMessage.textContent = (data && data.message) || 'متأسفانه تاریخ انتخابی قبلاً رزرو شده است.';
+        weatherBox.classList.remove('show-weather');
+        contactFields.style.display = 'none';
+        calcResultBox.style.display = 'none';
+        submitBtn.disabled = true;
+        persianDateInput.classList.remove('date-available-box');
+      }
+    };
+
+    script.onerror = fail;
+    script.src = `${GOOGLE_SCRIPT_URL}?action=checkDate&date=${encodeURIComponent(toEnglishDigits(dateStr))}&callback=${encodeURIComponent(callbackName)}&_=${Date.now()}`;
+    const timeoutId = setTimeout(fail, 12000);
+    document.head.appendChild(script);
+  }
+
+  function retryDateCheck() {
+    if (lastCheckedDate) {
+      let pDate = new persianDate(lastCheckedDate.split('/').map(Number));
+      checkDateAvailability(lastCheckedDate, pDate.toDate());
+    }
+  }
+
+  function showAvailableStatus() {
+    statusMessage.style.display = 'none';
+    persianDateInput.classList.add('date-available-box');
+    persianDateInput.value = `${selectedDateWithDay} - قابل رزرو`;
+
+    weatherBox.classList.add('show-weather');
+
+    contactFields.style.display = 'block';
+    submitBtn.disabled = false;
+    checkAndShowPrice();
+
+    setTimeout(() => {
+      contactFields.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
+  }
+
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    let peopleVal = parseInt(toEnglishDigits(peopleCount.value), 10);
+    if (isNaN(peopleVal) || peopleVal < 1 || peopleVal > 100) {
+      alert('تعداد نفرات باید بین ۱ تا ۱۰۰ نفر باشد.');
+      peopleCount.focus();
+      return;
+    }
+
+    if (calculatedRawPrice === 0) {
+      alert('لطفاً نوع متقاضی و تعداد نفرات را به درستی وارد کنید تا هزینه محاسبه شود.');
+      return;
+    }
+
+    const idValue = toEnglishDigits(idNumberInput.value);
+    const phoneValue = toEnglishDigits(phoneInput.value);
+    const isNationalCode = applicantType.value === 'other';
+    const requiredLen = isNationalCode ? 10 : 8;
+
+    if (!/^[0-9]+$/.test(idValue) || idValue.length !== requiredLen) {
+      alert(isNationalCode ? 'کد ملی باید دقیقاً ۱۰ رقم باشد.' : 'کد پرسنلی باید دقیقاً ۸ رقم باشد.');
+      idNumberInput.focus();
+      return;
+    }
+
+    if (!/^09[0-9]{9}$/.test(phoneValue)) {
+      alert('شماره همراه باید با 09 شروع شده و دقیقاً ۱۱ رقم باشد.');
+      phoneInput.focus();
+      return;
+    }
+
+    const invoiceContent = document.getElementById('invoiceDetailsContent');
+    const fullNameVal = document.getElementById('fullName').value;
+    const applicantTypeText = applicantType.options[applicantType.selectedIndex].text;
+
+    invoiceContent.innerHTML = `
+      <div class="invoice-row"><span>نام متقاضی:</span> <span>${escapeHtml(fullNameVal)}</span></div>
+      <div class="invoice-row"><span>نوع متقاضی:</span> <span>${escapeHtml(applicantTypeText)}</span></div>
+      <div class="invoice-row"><span>تعداد نفرات:</span> <span>${formatNumber(peopleCount.value)} نفر</span></div>
+      <div class="invoice-row"><span>تاریخ رزرو:</span> <span>${selectedDateWithDay}</span></div>
+      <div class="invoice-row"><span>مبلغ قابل پرداخت:</span> <span style="color:var(--gold); font-size:1.1rem;">${resultAmount.textContent}</span></div>
+    `;
+
+    document.getElementById('invoiceModal').style.display = 'flex';
+  });
+
+  document.getElementById('cancelInvoiceBtn').addEventListener('click', function() {
+    document.getElementById('invoiceModal').style.display = 'none';
+  });
+
+  document.getElementById('confirmInvoiceBtn').addEventListener('click', function() {
+    document.getElementById('invoiceModal').style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="btn-spinner"></span> در حال ثبت رزرو...';
+
+    const isStaff = applicantType.value !== 'other';
+    const phoneValue = toEnglishDigits(phoneInput.value);
+    const finalAmountText = resultAmount.textContent;
+
+    const hiddenForm = document.createElement('form');
+    hiddenForm.action = GOOGLE_SCRIPT_URL;
+    hiddenForm.method = 'POST';
+    hiddenForm.target = 'hidden_iframe';
+
+    const dataPayload = {
+      action: 'addBooking',
+      date: rawDateForCheck,
+      displayDate: selectedDateWithDay,
+      applicantType: applicantType.options[applicantType.selectedIndex].text,
+      peopleCount: toEnglishDigits(peopleCount.value),
+      price: finalAmountText,
+      fullName: document.getElementById('fullName').value,
+      idNumberType: isStaff ? 'کد پرسنلی' : 'کد ملی',
+      idNumber: toEnglishDigits(idNumberInput.value),
+      phone: phoneValue
+    };
+
+    for (let key in dataPayload) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = dataPayload[key];
+      hiddenForm.appendChild(input);
+    }
+
+    let iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'hidden_iframe';
+      iframe.name = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    document.body.appendChild(hiddenForm);
+    hiddenForm.submit();
+    document.body.removeChild(hiddenForm);
+
+    setTimeout(() => {
+      localStorage.setItem('golestan_pending_payment', JSON.stringify({
+        amount: finalAmountText,
+        date: selectedDateWithDay
+      }));
+
+      showPaymentModal(finalAmountText);
+      
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'ثبت رسمی درخواست رزرو';
+    }, 1500);
+  });
+
+  function showPaymentModal(amountStr) {
+    document.getElementById('payModalAmount').textContent = amountStr;
+    document.getElementById('paymentModal').style.display = 'flex';
+    document.getElementById('pendingPaymentBanner').style.display = 'block';
+  }
+
+  function openPaymentModalFromStorage() {
+    const savedData = localStorage.getItem('golestan_pending_payment');
+    if (savedData) {
+      try {
+        const parsed = JSON.parse(savedData);
+        showPaymentModal(parsed.amount);
+      } catch (e) {
+        showPaymentModal(resultAmount.textContent || '-- تومان');
+      }
+    } else {
+      showPaymentModal(resultAmount.textContent || '-- تومان');
+    }
+  }
+
+  function checkPendingPaymentOnLoad() {
+    const savedData = localStorage.getItem('golestan_pending_payment');
+    if (savedData) {
+      document.getElementById('pendingPaymentBanner').style.display = 'block';
+    }
+  }
+
+  function clearPendingPayment() {
+    localStorage.removeItem('golestan_pending_payment');
+    document.getElementById('pendingPaymentBanner').style.display = 'none';
+  }
+
+  function copyCardNumber() {
+    const rawCardNum = "6037991528523545";
+    copyTextSilently(rawCardNum, document.getElementById('copyCardBtn'));
+  }
+
+  function copyAllPaymentInfo() {
+    const amount = document.getElementById('payModalAmount').textContent;
+    const textToCopy = `اطلاعات واریز وجه اردوگاه گلستان:\nمبلغ: ${amount}\nشماره کارت: 6037991528523545\nصاحب حساب: علی اصغر منصوری خسروی\nمهلت واریز: تا ۱ ساعت آینده\nلینک ارسال رسید در ایتا:\nhttps://eitaa.com/GolestanCamp`;
+    copyTextSilently(textToCopy, document.getElementById('copyAllBtn'));
+  }
+
+  function copyTextSilently(text, btnElement) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        triggerCopyEffect(btnElement);
+      }).catch(() => {
+        fallbackCopySilent(text, btnElement);
+      });
+    } else {
+      fallbackCopySilent(text, btnElement);
+    }
+  }
+
+  function fallbackCopySilent(text, btnElement) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      triggerCopyEffect(btnElement);
+    } catch (err) {}
+    document.body.removeChild(textArea);
+  }
+
+  function triggerCopyEffect(btn) {
+    if (!btn) return;
+    btn.classList.add('copied-active');
+    setTimeout(() => {
+      btn.classList.remove('copied-active');
+    }, 400);
+  }
+
+  document.getElementById('paymentModalClose').addEventListener('click', function() {
+    document.getElementById('paymentModal').style.display = 'none';
+  });
+  document.getElementById('paymentModal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+
+  function loadComments() {
+    const container = document.getElementById('reviewsContainer');
+    
+    const callbackName = 'golestanCommentsCallback_' + Date.now();
+    const script = document.createElement('script');
+    let finished = false;
+
+    const cleanup = () => {
+      if (script.parentNode) script.parentNode.removeChild(script);
+      try { delete window[callbackName]; } catch (_) {}
+      if (timeoutTimer) clearTimeout(timeoutTimer);
+    };
+
+    const failComments = () => {
+      if (finished) return;
+      finished = true;
+      cleanup();
+      container.innerHTML = `
+        <div class="review-card" style="grid-column: 1 / -1; text-align: center;">
+          <div class="review-text" style="margin-bottom:10px;">خطا در دریافت نظرات از سرور.</div>
+          <button type="button" class="retry-btn" onclick="loadComments()">تلاش مجدد برای بارگذاری نظرات</button>
+        </div>
+      `;
+    };
+
+    window[callbackName] = function(data) {
+      if (finished) return;
+      finished = true;
+      cleanup();
+
+      if (data && data.success && data.comments && data.comments.length > 0) {
+        container.innerHTML = '';
+        data.comments.forEach(rev => {
+          let stars = '★'.repeat(parseInt(rev.rating) || 5) + '☆'.repeat(5 - (parseInt(rev.rating) || 5));
+          
+          let adminReplyHtml = '';
+          if (rev.adminReply && rev.adminReply.trim() !== '') {
+            adminReplyHtml = `
+              <div class="admin-reply-box">
+                <div class="admin-reply-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg>
+                  پاسخ مدیریت اردوگاه:
+                </div>
+                <div>${escapeHtml(rev.adminReply)}</div>
+              </div>
+            `;
+          }
+
+          let html = `
+            <div class="review-card">
+              <div>
+                <div class="review-author">
+                  <span>${escapeHtml(rev.name)}</span>
+                  <span class="review-stars">${stars}</span>
+                </div>
+                <div class="review-text">«${escapeHtml(rev.comment)}»</div>
+                ${adminReplyHtml}
+              </div>
+            </div>
+          `;
+          container.innerHTML += html;
+        });
+      } else {
+        container.innerHTML = '<div class="review-card" style="grid-column: 1 / -1;"><div class="review-text" style="text-align:center;">هنوز نظری ثبت نشده است. اولین نفری باشید که نظر می‌دهید!</div></div>';
+      }
+    };
+
+    script.onerror = failComments;
+    script.src = `${COMMENTS_SCRIPT_URL}?action=getComments&callback=${callbackName}&_=${Date.now()}`;
+    const timeoutTimer = setTimeout(failComments, 10000);
+    document.head.appendChild(script);
+  }
+
+  function escapeHtml(text) {
+    if (!text) return '';
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitCommentBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> در حال ارسال...';
+
+    const nameVal = document.getElementById('commentName').value.trim();
+    const ratingVal = document.getElementById('commentRating').value;
+    const commentVal = document.getElementById('commentText').value.trim();
+
+    const hiddenForm = document.createElement('form');
+    hiddenForm.action = COMMENTS_SCRIPT_URL;
+    hiddenForm.method = 'POST';
+    hiddenForm.target = 'hidden_iframe';
+
+    const dataPayload = {
+      action: 'addComment',
+      name: nameVal,
+      rating: ratingVal,
+      comment: commentVal
+    };
+
+    for (let key in dataPayload) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = dataPayload[key];
+      hiddenForm.appendChild(input);
+    }
+
+    let iframe = document.getElementById('hidden_iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'hidden_iframe';
+      iframe.name = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+
+    document.body.appendChild(hiddenForm);
+    hiddenForm.submit();
+    document.body.removeChild(hiddenForm);
+
+    setTimeout(() => {
+      document.getElementById('commentResultModal').style.display = 'flex';
+      document.getElementById('commentForm').reset();
+      btn.disabled = false;
+      btn.textContent = 'ارسال نظر';
+    }, 1500);
+  });
+
+  document.getElementById('commentResultClose').addEventListener('click', function() {
+    document.getElementById('commentResultModal').style.display = 'none';
+  });
+  document.getElementById('commentResultModal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
